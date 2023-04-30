@@ -2,6 +2,8 @@
   background: #e2e2e2;
   color: #000000;
   border: none;
-  width: 90%;
-  height: 90%;
-}
+  &:hover {
+    background:#0d6efd;
+    color: #ffffff;
+  }
+} 
