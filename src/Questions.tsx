@@ -9,6 +9,9 @@ function Questions() {
     }))
   }, [])
     <div className="App container">
+        <div className="col">
+          <ScoreCounter score={score} questionCount={questions.length}/>
+        </div>
       <div className="row mt-5">
         <div className="col">
           {!timeUp && <div>
