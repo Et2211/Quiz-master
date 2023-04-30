@@ -21,3 +21,6 @@ function Questions() {
       </div>
 
     </div>
+
+
+export default Questions
