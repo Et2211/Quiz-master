@@ -1,6 +1,7 @@
 function Questions() {
   //  make http request to /questions endpoint
   const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
+  const [score, setScore] = useState<number>(0)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   useEffect(()=>{
     (fetch('/questions.json').then((response)=>{
