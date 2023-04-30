@@ -1,3 +1,26 @@
+import { useEffect, useState } from "react"
+import QuestionContainer from "./components/QuestionContainer/QuestionContainer" 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ScoreCounter from "./components/ScoreCounter/ScoreCounter";
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import TimedOutModal from "./components/TimerOutModal/TimedOutModal";
+import { Modal } from 'bootstrap'
+
+
+interface questionArray {
+  question: string,
+  answers: Array<answerArray>,
+}
+
+interface answerArray {
+  phrasing: string,
+  isCorrect: boolean,
+}
+
+type timeProps = {
+  remainingTime: number
+}
+
 function Questions() {
   //  make http request to /questions endpoint
   const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
@@ -6,11 +29,14 @@ function Questions() {
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0)
   const [isPlaying, setIsplaying] = useState<boolean>(true)
+
+
   useEffect(()=>{
     (fetch('/questions.json').then((response)=>{
       response.json().then(res=>setQuestions(res))
     }))
   }, [])
+
   const renderTime = ({ remainingTime } : timeProps) => {
     if (remainingTime === 0) {
       return <div className="timer">Time's up!</div>;
@@ -28,6 +54,7 @@ function Questions() {
   const resetTimer = () => {
     setKey(prevKey => prevKey + 1)
   }
+
   const timerComplete = () => {
     setTimeUp(true)
     const options : object = {
@@ -37,6 +64,15 @@ function Questions() {
     var timedOutModal : Modal = new Modal(document.getElementById('timedOutModal') as HTMLElement, options)
     timedOutModal.show()
   }
+  const nextQuestion : Function = () => {
+    setQuestionNumber(questionNumber + 1)
+    resetTimer()
+    setIsplaying(true)
+    setTimeUp(false)
+
+  }
+  
+  return (
     <div className="App container">
       <div className="row justify-content-center align-items-center text-center">
         <div className="col">
