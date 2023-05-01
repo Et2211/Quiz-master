@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
 import AnswerModal from "./../AnswerModal/AnswerModal"
 import styles from './QuestionContainer.module.scss'
+import { increment } from "../../redux/counterSlice"
+import { useDispatch } from "react-redux"
 
 
 type Props = {
   questions: Array<questionArray>,
   score: number,
-  setScore: Function,
   questionNumber: number
   nextQuestion: Function,
   setIsplaying: Function
@@ -22,7 +23,9 @@ interface answerArray {
   isCorrect: boolean,
 }
 
-function QuestionContainer({questions, score, setScore, questionNumber, nextQuestion, setIsplaying}:Props) {
+function QuestionContainer({questions, score, questionNumber, nextQuestion, setIsplaying}:Props) {
+
+  const dispatch = useDispatch()
 
   const [correctAnswer, setCorrectAnswer] = useState<boolean>(false)
 
@@ -31,7 +34,7 @@ function QuestionContainer({questions, score, setScore, questionNumber, nextQues
 
     const answerClicked = (event : object, isCorrect:boolean) => {
       setCorrectAnswer(isCorrect)
-      setScore(score + (isCorrect ? 1 : 0))
+      dispatch(increment())
       setIsplaying(false)
     }
 
