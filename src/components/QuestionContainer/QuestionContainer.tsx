@@ -34,7 +34,7 @@ function QuestionContainer({questions, score, questionNumber, nextQuestion, setI
 
     const lastQuestion : boolean = questions.length === questionNumber + 1
   
-    const answerClicked = (event : object, isCorrect:boolean) => {
+    const answerClicked = (isCorrect:boolean) => {
       setCorrectAnswer(isCorrect)
       isCorrect && dispatch(increment())
       setIsplaying(false)
@@ -46,11 +46,11 @@ function QuestionContainer({questions, score, questionNumber, nextQuestion, setI
 
         <div className="row justify-contnent-center align-items-center">
 
-        {answers.map((answer)=>{
+        {answers.map((answer : answerArray, index: number)=>{
           return(
-            <div className="col-6 p-3">
+            <div className="col-6 p-3" key={index}>
               <div className="answers text-center">
-                <button className={"btn btn-primary " + styles.btn_answers} data-bs-toggle="modal" data-bs-target="#AnswerModal" onClick={(event)=>answerClicked(event, answer.isCorrect)}>
+                <button className={"btn btn-primary " + styles.btn_answers} data-bs-toggle="modal" data-bs-target="#AnswerModal" onClick={(event)=>answerClicked(answer.isCorrect)}>
                   {answer.phrasing}
                 </button>
               </div>
