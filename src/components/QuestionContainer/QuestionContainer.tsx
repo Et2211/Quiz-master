@@ -10,7 +10,7 @@ type Props = {
   score: number,
   questionNumber: number
   nextQuestion: Function,
-  setIsplaying: Function
+  setIsplaying: Function,
 }
 
 interface questionArray {
@@ -32,9 +32,11 @@ function QuestionContainer({questions, score, questionNumber, nextQuestion, setI
     const question:string = questions[questionNumber].question
     const answers:Array<answerArray> = questions[questionNumber].answers
 
+    const lastQuestion : boolean = questions.length === questionNumber + 1
+  
     const answerClicked = (event : object, isCorrect:boolean) => {
       setCorrectAnswer(isCorrect)
-      dispatch(increment())
+      isCorrect && dispatch(increment())
       setIsplaying(false)
     }
 
@@ -56,7 +58,7 @@ function QuestionContainer({questions, score, questionNumber, nextQuestion, setI
             )
           })}
         </div>
-        <AnswerModal correctAnswer={correctAnswer} nextQuestion={nextQuestion}/>
+        <AnswerModal correctAnswer={correctAnswer} nextQuestion={nextQuestion} lastQuestion={lastQuestion}/>
     </div>
   )
 }
