@@ -27,7 +27,7 @@ function AnswerModal({correctAnswer, nextQuestion, lastQuestion} :Props) {
             <div className="modal-footer">
               {lastQuestion ? 
               <Link to={'/completed'}>
-                <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>nextQuestion()}>Finish Quiz</button>
+                <button type="button" className="btn btn-primary" data-bs-dismiss="modal">Finish Quiz</button>
               </Link>
               :
               <button type="button" className="btn btn-primary" data-bs-dismiss="modal" onClick={()=>nextQuestion()}>Next Question</button>
