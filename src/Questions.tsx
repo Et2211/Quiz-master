@@ -5,6 +5,8 @@ import ScoreCounter from "./components/ScoreCounter/ScoreCounter";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import TimedOutModal from "./components/TimerOutModal/TimedOutModal";
 import { Modal } from 'bootstrap'
+import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { RootState, AppDispatch } from './redux/store'
 
 
 interface questionArray {
@@ -24,12 +26,13 @@ type timeProps = {
 function Questions() {
   //  make http request to /questions endpoint
   const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
-  const [score, setScore] = useState<number>(0)
+  //const [score, setScore] = useState<number>(0)
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0)
   const [isPlaying, setIsplaying] = useState<boolean>(true)
 
+  const score = useSelector((state: RootState)=>state.score.score)
 
   useEffect(()=>{
     (fetch('/questions.json').then((response)=>{
@@ -85,7 +88,7 @@ function Questions() {
       <div className="row mt-5">
         <div className="col">
           {!timeUp && <div>
-            <QuestionContainer questions={questions} score={score} setScore={setScore} questionNumber={questionNumber} nextQuestion={nextQuestion} setIsplaying={setIsplaying}/>
+            <QuestionContainer questions={questions} score={score} questionNumber={questionNumber} nextQuestion={nextQuestion} setIsplaying={setIsplaying}/>
           </div>}
         </div>
       </div>
@@ -93,7 +96,7 @@ function Questions() {
       <TimedOutModal nextQuestion={nextQuestion}/>
     </div>
 
-  )
+)
 }
-
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export default Questions
