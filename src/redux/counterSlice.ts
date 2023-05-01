@@ -27,10 +27,13 @@ export const counterSlice = createSlice({
     incrementByAmount: (state, action: PayloadAction<number>) => {
       state.score += action.payload
     },
+    reset: (state, action: PayloadAction<number>) => {
+      state.score = action.payload
+    },
   },
 })
 
-export const { increment, decrement, incrementByAmount } = counterSlice.actions
+export const { increment, decrement, incrementByAmount, reset } = counterSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.score
