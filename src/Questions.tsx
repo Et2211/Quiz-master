@@ -6,7 +6,7 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import TimedOutModal from "./components/TimerOutModal/TimedOutModal";
 import { Modal } from 'bootstrap'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState, AppDispatch } from './redux/store'
+import { RootState } from './redux/store'
 
 
 interface questionArray {
@@ -72,7 +72,6 @@ function Questions() {
     resetTimer()
     setIsplaying(true)
     setTimeUp(false)
-
   }
   
   return (
