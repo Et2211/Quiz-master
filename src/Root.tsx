@@ -6,17 +6,21 @@ import './style.scss'
 import NoPage from "./components/NoPage/NoPage";
 import StartPage from "./components/StartPage/StartPage";
 import QuizComplete from "./components/QuizComplete/QuizComplete";
+import {store} from './redux/store'
+import { Provider } from "react-redux";
 
 export default function Root() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        <Route path="/questions" element={<Questions />} />
-        <Route path="/completed" element={<QuizComplete/>} />
-        <Route path="*" element={<NoPage />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="/questions" element={<Questions />} />
+          <Route path="/completed" element={<QuizComplete/>} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
