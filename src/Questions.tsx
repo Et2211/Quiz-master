@@ -26,11 +26,10 @@ type timeProps = {
 function Questions() {
   //  make http request to /questions endpoint
   const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
-  //const [score, setScore] = useState<number>(0)
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0)
-  const [isPlaying, setIsplaying] = useState<boolean>(true)
+  const [isPlaying, setIsplaying] = useState<boolean>(false)
 
   const score = useSelector((state: RootState)=>state.score.score)
 
