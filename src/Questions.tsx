@@ -28,7 +28,7 @@ function Questions() {
   const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
-  const [key, setKey] = useState<number>(0)
+  const [key, setKey] = useState<number>(0) //used to reset countdown timer
   const [isPlaying, setIsplaying] = useState<boolean>(false)
 
   const score = useSelector((state: RootState)=>state.score.score)
