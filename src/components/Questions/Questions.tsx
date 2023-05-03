@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react"
-import QuestionContainer from "../QuestionContainer/QuestionContainer" 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import ScoreCounter from "../ScoreCounter/ScoreCounter";
-import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import TimedOutModal from "../TimerOutModal/TimedOutModal";
-import { Modal } from 'bootstrap'
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState } from '../../redux/store'
+import { useState, useEffect } from "react"
+import AnswerModal from "../AnswerModal/AnswerModal"
+import styles from './Questions.module.scss'
+import { increment } from "../../redux/counterSlice"
+import { useDispatch } from "react-redux"
 
+
+type Props = {
+  questions: Array<questionArray>,
+  score: number,
+  questionNumber: number
+  nextQuestion: Function,
+  setIsplaying: Function,
+}
 
 interface questionArray {
   question: string,
@@ -19,80 +23,44 @@ interface answerArray {
   isCorrect: boolean,
 }
 
-type timeProps = {
-  remainingTime: number
-}
+function Questions({questions, score, questionNumber, nextQuestion, setIsplaying}:Props) {
 
-function Questions() {
-  //  make http request to /questions endpoint
-  const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
-  const [timeUp, setTimeUp] = useState<boolean>(false)
-  const [questionNumber, setQuestionNumber] = useState<number>(0)
-  const [key, setKey] = useState<number>(0) //used to reset countdown timer
-  const [isPlaying, setIsplaying] = useState<boolean>(true)
+  const dispatch = useDispatch()
 
-  const score = useSelector((state: RootState)=>state.score.score)
+  const [correctAnswer, setCorrectAnswer] = useState<boolean>(false)
 
-  useEffect(()=>{
-    (fetch('/questions.json').then((response)=>{
-      response.json().then(res=>setQuestions(res))
-    }))
-  }, [])
+    const question:string = questions[questionNumber].question
+    const answers:Array<answerArray> = questions[questionNumber].answers
 
-  const renderTime = ({ remainingTime } : timeProps) => {
-    if (remainingTime === 0) {
-      return <div className="timer">Time's up!</div>;
-    }
+    const lastQuestion : boolean = questions.length === questionNumber + 1
   
+    const answerClicked = (isCorrect:boolean) => {
+      setCorrectAnswer(isCorrect)
+      isCorrect && dispatch(increment())
+      setIsplaying(false)
+    }
+
     return (
-      <div className="timer">
-        <div className="text">Remaining</div>
-        <div className="value">{remainingTime}</div>
-        <div className="text">seconds</div>
-      </div>
-    );
-  };
+    <div>
+        <h1>{question}</h1>
 
-  const resetTimer = () => {
-    setKey(prevKey => prevKey + 1)
-  }
+        <div className="row justify-contnent-center align-items-center">
 
-  const timerComplete = () => {
-    setTimeUp(true)
-    const options : object = {
-      backdrop: 'static'
-    }
-
-    var timedOutModal : Modal = new Modal(document.getElementById('timedOutModal') as HTMLElement, options)
-    timedOutModal.show()
-  }
-  const nextQuestion : Function = () => {
-    setQuestionNumber(questionNumber + 1)
-    resetTimer()
-    setIsplaying(true)
-    setTimeUp(false)
-  }
-  
-  return (
-    <>
-      <div className="row justify-content-center align-items-center text-center">
-        <div className="col">
-          <CountdownCircleTimer key={key} isPlaying={isPlaying} duration={10} colors={['#004777', '#F7B801', '#A30000', '#A30000']} colorsTime={[7, 5, 2, 0]} onComplete={()=>{timerComplete()}} size={180}>{renderTime}</CountdownCircleTimer>
+        {answers.map((answer : answerArray, index: number)=>{
+          return(
+            <div className="col-6 p-3" key={index}>
+              <div className="answers text-center">
+                <button className={"btn btn-primary " + styles.btn_answers} data-bs-toggle="modal" data-bs-target="#AnswerModal" onClick={(event)=>answerClicked(answer.isCorrect)}>
+                  {answer.phrasing}
+                </button>
+              </div>
+            </div>
+            )
+          })}
         </div>
-        <div className="col">
-          <ScoreCounter score={score} questionCount={questions.length}/>
-        </div>
-      </div>
-      <div className="row mt-5">
-        <div className="col">
-          {!timeUp && <div>
-            <QuestionContainer questions={questions} score={score} questionNumber={questionNumber} nextQuestion={nextQuestion} setIsplaying={setIsplaying}/>
-          </div>}
-        </div>
-      </div>
-      <TimedOutModal nextQuestion={nextQuestion}/>
-    </>
+        <AnswerModal correctAnswer={correctAnswer} nextQuestion={nextQuestion} lastQuestion={lastQuestion}/>
+    </div>
   )
 }
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
 export default Questions
