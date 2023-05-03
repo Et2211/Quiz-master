@@ -12,14 +12,16 @@ import { Provider } from "react-redux";
 export default function Root() {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<StartPage />} />
-          <Route path="/questions" element={<Questions />} />
-          <Route path="/completed" element={<QuizComplete/>} />
-          <Route path="*" element={<NoPage />} />
-        </Routes>
-      </BrowserRouter>
+      <div className="container">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<StartPage />} />
+            <Route path="/questions" element={<Questions />} />
+            <Route path="/completed" element={<QuizComplete/>} />
+            <Route path="*" element={<NoPage />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </Provider>
   );
 }

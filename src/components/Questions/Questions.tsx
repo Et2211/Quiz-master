@@ -74,7 +74,7 @@ function Questions() {
   }
   
   return (
-    <div className="App container">
+    <>
       <div className="row justify-content-center align-items-center text-center">
         <div className="col">
           <CountdownCircleTimer key={key} isPlaying={isPlaying} duration={10} colors={['#004777', '#F7B801', '#A30000', '#A30000']} colorsTime={[7, 5, 2, 0]} onComplete={()=>{timerComplete()}} size={180}>{renderTime}</CountdownCircleTimer>
@@ -90,11 +90,9 @@ function Questions() {
           </div>}
         </div>
       </div>
-
       <TimedOutModal nextQuestion={nextQuestion}/>
-    </div>
-
-)
+    </>
+  )
 }
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
 export default Questions
