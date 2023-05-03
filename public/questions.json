@@ -1,6 +1,6 @@
 [
   {
-    "question": "What's the capital of the UK",
+    "question": "What's the capital of the UK?",
     "answers": [
       {
         "phrasing": "London",
@@ -21,7 +21,7 @@
     ]
   },
   {
-    "question": "What's the capital of the France",
+    "question": "What's the capital of the France?",
     "answers": [
       {
         "phrasing": "London",
@@ -42,7 +42,7 @@
     ]
   },
   {
-    "question": "What's the capital of the Spain",
+    "question": "What's the capital of the Spain?",
     "answers": [
       {
         "phrasing": "London",
@@ -63,7 +63,7 @@
     ]
   },
   {
-    "question": "What's the capital of Germany",
+    "question": "What's the capital of Germany?",
     "answers": [
       {
         "phrasing": "London",
@@ -84,7 +84,7 @@
     ]
   },
   {
-    "question": "What's the capital of Japan",
+    "question": "What's the capital of Japan?",
     "answers": [
       {
         "phrasing": "London",
@@ -105,7 +105,7 @@
     ]
   },
   {
-    "question": "What's the capital of the USA",
+    "question": "What's the capital of the USA?",
     "answers": [
       {
         "phrasing": "London",
