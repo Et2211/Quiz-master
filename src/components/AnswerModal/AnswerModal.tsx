@@ -1,4 +1,4 @@
-import { useState } from "react"
+import styles from './AnswerModal.module.scss'
 import './AnswerModal.module.scss'
 import { Link } from "react-router-dom"
 
@@ -20,6 +20,7 @@ function AnswerModal({correctAnswer, nextQuestion, lastQuestion} :Props) {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="AnswerModalLabel">{correctAnswer ? 'Correct answer!' : 'Wrong answer!'}</h5>
+              {correctAnswer ? <i className={"fa-solid fa-check " + styles.correct}></i> : <i className={"fa-solid fa-xmark " + styles.incorrect}></i>}
             </div>
             <div className="modal-body">
             {correctAnswer ? 'You selected the correct answer!' : 'You selected the wrong answer!'}
