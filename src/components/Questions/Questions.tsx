@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import QuestionContainer from "./components/QuestionContainer/QuestionContainer" 
+import QuestionContainer from "../QuestionContainer/QuestionContainer" 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ScoreCounter from "./components/ScoreCounter/ScoreCounter";
+import ScoreCounter from "../ScoreCounter/ScoreCounter";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
-import TimedOutModal from "./components/TimerOutModal/TimedOutModal";
+import TimedOutModal from "../TimerOutModal/TimedOutModal";
 import { Modal } from 'bootstrap'
 import { TypedUseSelectorHook, useSelector } from 'react-redux'
-import { RootState } from './redux/store'
+import { RootState } from '../../redux/store'
 
 
 interface questionArray {
@@ -29,7 +29,7 @@ function Questions() {
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0) //used to reset countdown timer
-  const [isPlaying, setIsplaying] = useState<boolean>(false)
+  const [isPlaying, setIsplaying] = useState<boolean>(true)
 
   const score = useSelector((state: RootState)=>state.score.score)
 

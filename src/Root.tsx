@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Questions from './Questions'
+import Questions from './components/Questions/Questions'
 import './index.css'
 import './style.scss'
 import NoPage from "./components/NoPage/NoPage";
