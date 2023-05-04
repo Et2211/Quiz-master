@@ -48,7 +48,7 @@ function Questions({questions, score, questionNumber, nextQuestion, setIsplaying
 
         {answers.map((answer : answerArray, index: number)=>{
           return(
-            <div className="col-6 p-3" key={index}>
+            <div className="col-md-6 col-12 p-3" key={index}>
               <div className="answers text-center">
                 <button className={"btn btn-primary " + styles.btn_answers} data-bs-toggle="modal" data-bs-target="#AnswerModal" onClick={(event)=>answerClicked(answer.isCorrect)}>
                   {answer.phrasing}
