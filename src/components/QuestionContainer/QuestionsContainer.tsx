@@ -29,11 +29,8 @@ function QuestionsContainer() {
   const score = useSelector((state: RootState)=>state.score.score)
   const questions = useSelector(getQuestions)
 
-  console.log(questions)
-
   useEffect(()=>{
     (fetch('/questions.json').then((response)=>{
-      //response.json().then(res=>setQuestions(res))
       response.json().then(res=>{
         dispatch(setQuestions(res))
         setReady(true)
