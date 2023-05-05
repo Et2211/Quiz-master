@@ -15,15 +15,12 @@ type timeProps = {
 }
 
 function QuestionsContainer() {
-  //  make http request to /questions endpoint
-  //const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0) //used to reset countdown timer
   const [isPlaying, setIsplaying] = useState<boolean>(true)
   const [ready, setReady] = useState<boolean>(false)
   
-
   const dispatch : Function = useDispatch()
 
   const score = useSelector((state: RootState)=>state.score.score)
