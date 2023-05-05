@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { counterSlice } from './counterSlice'
+import { questionSlice } from './questionSlice'
 // ...
 
 export const store = configureStore({
   reducer: {
     score: counterSlice.reducer,
+    questions: questionSlice.reducer,
 
   },
 })

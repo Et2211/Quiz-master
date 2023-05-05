@@ -5,19 +5,10 @@ import ScoreCounter from "../ScoreCounter/ScoreCounter";
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 import TimedOutModal from "../TimerOutModal/TimedOutModal";
 import { Modal } from 'bootstrap'
-import { TypedUseSelectorHook, useSelector } from 'react-redux'
+import { TypedUseSelectorHook, useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../redux/store'
+import { setQuestions, getQuestions } from "../../redux/questionSlice";
 
-
-interface questionArray {
-  question: string,
-  answers: Array<answerArray>,
-}
-
-interface answerArray {
-  phrasing: string,
-  isCorrect: boolean,
-}
 
 type timeProps = {
   remainingTime: number
@@ -25,17 +16,28 @@ type timeProps = {
 
 function QuestionsContainer() {
   //  make http request to /questions endpoint
-  const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
+  //const [questions, setQuestions] = useState<questionArray[] | []>([{question:'', answers:[]}])
   const [timeUp, setTimeUp] = useState<boolean>(false)
   const [questionNumber, setQuestionNumber] = useState<number>(0)
   const [key, setKey] = useState<number>(0) //used to reset countdown timer
   const [isPlaying, setIsplaying] = useState<boolean>(true)
+  const [ready, setReady] = useState<boolean>(false)
+  
+
+  const dispatch : Function = useDispatch()
 
   const score = useSelector((state: RootState)=>state.score.score)
+  const questions = useSelector(getQuestions)
+
+  console.log(questions)
 
   useEffect(()=>{
     (fetch('/questions.json').then((response)=>{
-      response.json().then(res=>setQuestions(res))
+      //response.json().then(res=>setQuestions(res))
+      response.json().then(res=>{
+        dispatch(setQuestions(res))
+        setReady(true)
+      })
     }))
   }, [])
 
@@ -75,6 +77,7 @@ function QuestionsContainer() {
   
   return (
     <>
+    {ready && <div>
       <div className="row justify-content-center align-items-center text-center">
         <div className="col">
           <CountdownCircleTimer key={key} isPlaying={isPlaying} duration={10} colors={['#004777', '#F7B801', '#A30000', '#A30000']} colorsTime={[7, 5, 2, 0]} onComplete={()=>{timerComplete()}} size={180}>{renderTime}</CountdownCircleTimer>
@@ -85,12 +88,13 @@ function QuestionsContainer() {
       </div>
       <div className="row mt-5">
         <div className="col">
-          {!timeUp && <div>
+          {!timeUp &&  <div>
             <QuestionContainer questions={questions} score={score} questionNumber={questionNumber} nextQuestion={nextQuestion} setIsplaying={setIsplaying}/>
           </div>}
         </div>
       </div>
       <TimedOutModal nextQuestion={nextQuestion}/>
+    </div>}
     </>
   )
 }
