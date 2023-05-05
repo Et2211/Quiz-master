@@ -19,7 +19,7 @@ interface answerArray {
 }
 
 const initialState: questionState = {
-  questions: [{question:'', answers:[], isCorrect: false}],
+  questions: [],
 }
 
 export const questionSlice = createSlice({
