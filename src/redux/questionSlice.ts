@@ -10,6 +10,7 @@ interface questionState {
 interface questionArray {
   question: string,
   answers: Array<answerArray>,
+  isCorrect: boolean
 }
 
 interface answerArray {
@@ -18,21 +19,23 @@ interface answerArray {
 }
 
 const initialState: questionState = {
-  questions: [{question:'', answers:[]}],
+  questions: [{question:'', answers:[], isCorrect: false}],
 }
 
 export const questionSlice = createSlice({
-  name: 'quesions',
+  name: 'questions',
   initialState,
   reducers: {
     setQuestions: (state, action) => {
-      console.log(action)
       state.questions = action.payload
+    },
+    markAnswer: (state, action : PayloadAction<{questionNumber: number, isCorrect: boolean}>) => {
+      state.questions[action.payload.questionNumber].isCorrect = action.payload.isCorrect
     }
   },
 })
 
-export const { setQuestions } = questionSlice.actions
+export const { setQuestions, markAnswer } = questionSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const getQuestions = (state: RootState) => state.questions.questions

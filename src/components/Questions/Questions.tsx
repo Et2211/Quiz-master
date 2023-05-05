@@ -3,6 +3,7 @@ import AnswerModal from "../AnswerModal/AnswerModal"
 import styles from './Questions.module.scss'
 import { increment } from "../../redux/counterSlice"
 import { useDispatch } from "react-redux"
+import { markAnswer } from "../../redux/questionSlice"
 
 
 type Props = {
@@ -37,6 +38,7 @@ function Questions({questions, score, questionNumber, nextQuestion, setIsplaying
     const answerClicked = (isCorrect:boolean) => {
       setCorrectAnswer(isCorrect)
       isCorrect && dispatch(increment())
+      dispatch(markAnswer({questionNumber, isCorrect}))
       setIsplaying(false)
     }
 
